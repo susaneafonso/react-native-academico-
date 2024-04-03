@@ -4,34 +4,26 @@ import{useState, useEffect} from 'react'
 
 export function Nav() {
 
-const [gitList,setGitList]=useState([]);
-const [search,setSearch]=useState("");
+   const [gitList,setGitList]=useState([]);
+   const [search,setSearch]=useState("");
 
-const fetchApi= async (nome)=>{
+   const fetchApi= async (nome)=>{
+       const response = await fetch(
+         `https://api.github.com/users/${nome}/repos`
+      )
+       const data = await response.json()
+       setGitList(data)
+       console.log(erro)
+     }
 
-
-const response = await fetch(
-`https://api.github.com/users/${nome}/repos`
-)
-
-const data = await response.json()
-setGitList(data)
-
-console.log(erro)
-}
-
-
-const submission= ()=>{
-const inputt= search.toLowerCase().trim().split(" ").join('')
-
-
-console.log(inputt)
-if(inputt!==""){
-fetchApi(inputt)
-setSearch("")
-}
-
-}
+   const submission= ()=>{
+     const inputt= search.toLowerCase().trim().split(" ").join('')
+     console.log(inputt)
+     if(inputt!==""){
+       fetchApi(inputt)
+       setSearch("")
+       }
+     }
 
   return (
     <View style={styles.container}>
@@ -46,7 +38,7 @@ setSearch("")
                     <Text style={[styles.nome,{paddingBottom:5}]}>Nome : {item.name}</Text>
                     <Text style={styles.nome}>Data : {new Date (item.created_at).toLocaleDateString()}</Text>
             </View>
-   )}}
+     )}}
        />
     </View>
   );
